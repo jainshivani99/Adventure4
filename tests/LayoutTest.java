@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
-public class RoomTest {
+public class LayoutTest {
 
     private Layout myGameLayout;
     private static final String SIEBEL_JSON = "{\n" +
