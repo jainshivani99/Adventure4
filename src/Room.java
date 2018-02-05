@@ -14,13 +14,7 @@ public class Room {
     private String[] items;
 
     //an array of directions that you can go from the room you are currently in
-    private String[] directions;
-
-    //the direction name of the next room
-    private String directionName;
-
-    //the name of the room you can go to next
-    private String room;
+    private Direction[] directions;
 
     //Empty Constructor
     public Room() {
@@ -57,24 +51,8 @@ public class Room {
      * Gets the directions array of the room you are currently in
      * @return directions - an array of directions that you can go from the room you are currently in
      */
-    public String[] getDirections() {
+    public Direction[] getDirections() {
         return directions;
-    }
-
-    /**
-     * Gets the direction name of the next room you can go to
-     * @return directionName - the direction name of the next room
-     */
-    public String getDirectionName() {
-        return directionName;
-    }
-
-    /**
-     * Gets the name of the room you can go to next based off of the user input
-     * @return room - the name of the room you can go to next
-     */
-    public String getRoom() {
-        return room;
     }
 
 }
