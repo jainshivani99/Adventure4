@@ -149,8 +149,23 @@ public class LayoutTest {
     }
 
     @Test
+    public void getNameObj2Test() {
+        assertEquals("SiebelNorthHallway", myGameLayout.getRooms()[3].getName());
+    }
+
+    @Test (expected = ArrayIndexOutOfBoundsException.class)
+    public void getNameObj3Test() {
+        myGameLayout.getRooms()[15].getName();
+    }
+
+    @Test
     public void getDescriptionTest() {
         assertEquals("You are in the ACM office.  There are lots of friendly ACM people.", myGameLayout.getRooms()[2].getDescription());
+    }
+
+    @Test (expected = ArrayIndexOutOfBoundsException.class)
+    public void getDescriptionObj2Test() {
+        myGameLayout.getRooms()[11].getDescription();
     }
 
     @Test
@@ -160,17 +175,17 @@ public class LayoutTest {
         assertEquals(equals, true);
     }
 
-    @Test
-    public void getDirectionsTest() {
-        //String[] expectedResult = {"\"directionName\": \"South\", \"room\": \"SiebelEntry\""};
+//    @Test
+//    public void getDirectionsTest() {
+//        //String[] expectedResult = {"\"directionName\": \"South\", \"room\": \"SiebelEntry\""};
 //        String[] expectedResult = {
 //        "          \"directionName\": \"South\",\n" +
 //                "          \"room\": \"SiebelEntry\"\n" +
-//                "        }\n"};
-        String[] expectedResult = {"South", "SiebelEntry"};
-        boolean equals = Arrays.equals(expectedResult, myGameLayout.getRooms()[2].getDirections());
-        assertEquals(equals, true);
-    }
+//               "        }\n"};
+//        String[] expectedResult = {"South", "SiebelEntry"};
+//        boolean equals = Arrays.equals(expectedResult, myGameLayout.getRooms()[2].getDirections());
+//        assertEquals(equals, true);
+//    }
 
     @Test
     public void getDirectionNameTest() {
@@ -178,8 +193,18 @@ public class LayoutTest {
     }
 
     @Test
+    public void getDirectionNameObj2Test() {
+        assertEquals("South", myGameLayout.getRooms()[3].getDirections()[0].getDirectionName());
+    }
+
+    @Test
     public void getRoomTest() {
         assertEquals("SiebelEntry", myGameLayout.getRooms()[2].getDirections()[0].getRoom());
+    }
+
+    @Test
+    public void getRoomObj2Test() {
+        assertEquals("SiebelEntry", myGameLayout.getRooms()[3].getDirections()[0].getRoom());
     }
 
     @Test
