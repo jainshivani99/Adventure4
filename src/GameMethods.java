@@ -3,15 +3,15 @@
  */
 public class GameMethods {
 
-    public void goDirection() {
+    public void goDirection(String direction) {
 
     }
 
-    public void takeItem() {
+    public void takeItem(String item) {
 
     }
 
-    public void dropItem() {
+    public void dropItem(String item) {
 
     }
 
