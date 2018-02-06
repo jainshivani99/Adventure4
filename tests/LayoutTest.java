@@ -175,17 +175,15 @@ public class LayoutTest {
         assertEquals(equals, true);
     }
 
-//    @Test
-//    public void getDirectionsTest() {
-//        //String[] expectedResult = {"\"directionName\": \"South\", \"room\": \"SiebelEntry\""};
-//        String[] expectedResult = {
-//        "          \"directionName\": \"South\",\n" +
-//                "          \"room\": \"SiebelEntry\"\n" +
-//               "        }\n"};
-//        String[] expectedResult = {"South", "SiebelEntry"};
-//        boolean equals = Arrays.equals(expectedResult, myGameLayout.getRooms()[2].getDirections());
-//        assertEquals(equals, true);
-//    }
+    @Test
+    public void getDirectionsTest() {
+        Direction expectedDirection = new Direction();
+        expectedDirection.setDirectionName("South");
+        expectedDirection.setRoom("SiebelEntry");
+        Direction myDirection = myGameLayout.getRooms()[2].getDirections()[0];
+        assertEquals(expectedDirection.getDirectionName(), myDirection.getDirectionName());
+        assertEquals(expectedDirection.getRoom(), myDirection.getRoom());
+    }
 
     @Test
     public void getDirectionNameTest() {
@@ -217,10 +215,17 @@ public class LayoutTest {
         assertEquals("Siebel1314", myGameLayout.getEndingRoom());
     }
 
-//    @Test
-//    public void getRoomsTest() {
-//        String[] expectedResult = {"name\": \"MatthewsStreet\",\r\n      \"description\": \"You are on Matthews, outside the Siebel Center\",\r\n      \"items\": [\"coin\"],\r\n      \"directions\": [\r\n        {\r\n          \"directionName\": \"East\",\r\n          \"room\": \"SiebelEntry\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"name\": \"SiebelEntry\",\r\n      \"description\": \"You are in the west entry of Siebel Center.  You can see the elevator, the ACM office, and hallways to the north and east.\",\r\n\t  \"items\": [\"sweatshirt\", \"key\"],\r\n      \"directions\": [\r\n        {\r\n          \"directionName\": \"West\",\r\n          \"room\": \"MatthewsStreet\"\r\n        },\r\n        {\r\n          \"directionName\": \"Northeast\",\r\n          \"room\": \"AcmOffice\"\r\n        },\r\n        {\r\n          \"directionName\": \"North\",\r\n          \"room\": \"SiebelNorthHallway\"\r\n        },\r\n        {\r\n          \"directionName\": \"East\",\r\n          \"room\": \"SiebelEastHallway\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"name\": \"AcmOffice\",\r\n      \"description\": \"You are in the ACM office.  There are lots of friendly ACM people.\",\r\n      \"items\": [\"pizza\", \"swag\"],\r\n      \"directions\": [\r\n        {\r\n          \"directionName\": \"South\",\r\n          \"room\": \"SiebelEntry\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"name\": \"SiebelNorthHallway\",\r\n      \"description\": \"You are in the north hallway.  You can see Siebel 1112 and the door toward NCSA.\",\r\n      \"directions\": [\r\n        {\r\n          \"directionName\": \"South\",\r\n          \"room\": \"SiebelEntry\"\r\n        }, \r\n        {\r\n          \"directionName\": \"NorthEast\",\r\n          \"room\": \"Siebel1112\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"name\": \"Siebel1112\",\r\n      \"description\": \"You are in Siebel 1112.  There is space for two code reviews in this room.\",\r\n      \"items\": [\"USB-C connector\", \"grading rubric\"],\r\n      \"directions\": [\r\n        {\r\n          \"directionName\": \"West\",\r\n          \"room\": \"SiebelNorthHallway\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"name\": \"SiebelEastHallway\",\r\n      \"description\": \"You are in the east hallway.  You can see Einstein Bros' Bagels and a stairway.\",\r\n      \"items\": [\"bagel\", \"coffee\"],\r\n      \"directions\": [\r\n        {\r\n          \"directionName\": \"West\",\r\n          \"room\": \"SiebelEntry\"\r\n        },\r\n        {\r\n          \"directionName\": \"South\",\r\n          \"room\": \"Siebel1314\"\r\n        },\r\n        {\r\n          \"directionName\": \"Down\",\r\n          \"room\": \"SiebelBasement\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"name\": \"Siebel1314\",\r\n      \"description\": \"You are in Siebel 1314.  There are happy CS 126 students doing a code review.\",\r\n      \"directions\": [\r\n        {\r\n          \"directionName\": \"North\",\r\n          \"room\": \"SiebelEastHallway\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"name\": \"SiebelBasement\",\r\n      \"description\": \"You are in the basement of Siebel.  You see tables with students working and door to computer labs.\",\r\n      \"items\": [\"pencil\"],\r\n      \"directions\": [\r\n        {\r\n          \"directionName\": \"Up\",\r\n          \"room\": \"SiebelEastHallway\"\r\n        }\r\n      ]\r\n    }";
-//        assertEquals(expectedResult, myGameLayout.getRooms());
-//    }
-
+    @Test
+    public void getRoomsTest() {
+        Room expectedRoom = new Room();
+        expectedRoom.setName("AcmOffice");
+        expectedRoom.setDescription("You are in the ACM office.  There are lots of friendly ACM people.");
+        String[] myItems = {"pizza", "swag"};
+        expectedRoom.setItems(myItems);
+        Room[] myRooms = myGameLayout.getRooms();
+        assertEquals(expectedRoom.getName(), myRooms[2].getName());
+        assertEquals(expectedRoom.getDescription(), myRooms[2].getDescription());
+        boolean expected = Arrays.equals(expectedRoom.getItems(), myRooms[2].getItems());
+        assertEquals(expected, true);
+    }
 }

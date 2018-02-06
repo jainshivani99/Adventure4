@@ -31,4 +31,12 @@ public class Direction {
     public String getRoom() {
         return room;
     }
+
+    public void setDirectionName(String directionName) {
+        this.directionName = directionName;
+    }
+
+    public void setRoom(String room) {
+        this.room = room;
+    }
 }

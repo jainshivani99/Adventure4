@@ -4,6 +4,22 @@
  */
 public class Room {
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setItems(String[] items) {
+        this.items = items;
+    }
+
+    public void setDirections(Direction[] directions) {
+        this.directions = directions;
+    }
+
     //the name of the room you are currently in
     private String name;
 
