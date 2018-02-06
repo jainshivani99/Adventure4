@@ -4,22 +4,6 @@
  */
 public class Room {
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setItems(String[] items) {
-        this.items = items;
-    }
-
-    public void setDirections(Direction[] directions) {
-        this.directions = directions;
-    }
-
     //the name of the room you are currently in
     private String name;
 
@@ -70,5 +54,40 @@ public class Room {
     public Direction[] getDirections() {
         return directions;
     }
+
+    //Setter methods for each attribute of the room object
+
+    /**
+     * Sets the name of the room to the given parameter
+     * @param name - the name of the room to set it to
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * Sets the description of the room to the given parameter
+     * @param description - the description of the room to set it to
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    /**
+     * Sets the array of items in the room to the given parameter
+     * @param items - an array of items to set it to
+     */
+    public void setItems(String[] items) {
+        this.items = items;
+    }
+
+    /**
+     * Sets the array of Direction objects for the room to the given parameter
+     * @param directions - an array of Direction objects to set it to
+     */
+    public void setDirections(Direction[] directions) {
+        this.directions = directions;
+    }
+
 
 }
