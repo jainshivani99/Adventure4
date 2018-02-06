@@ -2,6 +2,7 @@ import com.google.gson.Gson;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import com.sun.deploy.util.ArrayUtil;
 
 import java.util.Scanner;
 import java.util.Arrays;
@@ -45,25 +46,34 @@ public class PlayAdventure {
             }
         }
         PlayAdventure.printCurrentRoom(currentRoom);
+        ArrayList<String> myItems = new ArrayList<String>();
 
         String userInput = myScan.nextLine();
+        String userCommand = userInput.toLowerCase();
         if (userInput.equalsIgnoreCase("quit") || userInput.equalsIgnoreCase("exit")) {
             return;
         }
 
-        String userCommand = userInput.toLowerCase();
-        if (userCommand.startsWith("go")) {
+        else if (userInput.equalsIgnoreCase("list")) {
+            PlayAdventure.printItemsList(myItems);
+        }
+
+        else if (userCommand.startsWith("go")) {
             PlayAdventure.goDirection(currentRoom, direction);
         }
 
-        if (userCommand.startsWith("take")) {
-            PlayAdventure.takeItem(currentRoom, item);
+        else if (userCommand.startsWith("take")) {
+            PlayAdventure.takeItem(currentRoom, item, myItems);
         }
 
-        if(userCommand.startsWith("drop")) {
-            PlayAdventure.dropItem(currentRoom, item);
+        else if (userCommand.startsWith("drop")) {
+            PlayAdventure.dropItem(currentRoom, item, myItems);
         }
 
+        else {
+            System.out.println("I don't understand" + userInput);
+            PlayAdventure.printCurrentRoom(currentRoom);
+        }
 
     }
 
@@ -73,9 +83,14 @@ public class PlayAdventure {
             System.out.println("Your journey begins here");
         } else if (currentRoom.getName().equals(myGameLayoutJson.getEndingRoom())) {
             System.out.println("You have reached your final destination");
+            return;
         }
         System.out.println("This room contains" + Arrays.toString(currentRoom.getItems()));
         System.out.println("From here you can go:" + Arrays.toString(currentRoom.getDirections()));
+    }
+
+    public static void printItemsList(ArrayList<String> myItems) {
+        System.out.println(Arrays.toString(myItems.toArray()));
     }
 
     public static void goDirection(Room currentRoom, String direction) {
@@ -86,13 +101,13 @@ public class PlayAdventure {
                 PlayAdventure.printCurrentRoom(currentRoom);
             } else {
                 System.out.println("I can't go" + direction);
+                PlayAdventure.printCurrentRoom(currentRoom);
             }
         }
     }
 
-    public static void takeItem(Room currentRoom, String item) {
+    public static void takeItem(Room currentRoom, String item, ArrayList<String> myItems) {
         String[] currentRoomItems = currentRoom.getItems();
-        ArrayList<String> myItems = new ArrayList<String>();
         for (String itemObj : currentRoomItems) {
             if (itemObj.equals(item)) {
                 myItems.add(itemObj);
@@ -100,11 +115,22 @@ public class PlayAdventure {
                 PlayAdventure.printCurrentRoom(currentRoom);
             } else {
                 System.out.println("I can't take" + item);
+                PlayAdventure.printCurrentRoom(currentRoom);
             }
         }
     }
 
-    public static void dropItem(String item) {
-
+    public static void dropItem(Room currentRoom, String item, ArrayList<String> myItems) {
+        String[] currentRoomItems = currentRoom.getItems();
+        for (String itemObj : myItems) {
+            if (itemObj.equals(item)) {
+                myItems.remove(itemObj);
+                currentRoomItems = ArrayUtils.add(currentRoomItems, itemObj);
+                PlayAdventure.printCurrentRoom(currentRoom);
+            } else {
+                System.out.println("I can't drop" + item);
+                PlayAdventure.printCurrentRoom(currentRoom);
+            }
+        }
     }
 }
