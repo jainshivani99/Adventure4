@@ -2,6 +2,17 @@
  * A class that defines a layout object with all of its attributes.
  */
 public class Layout {
+    public void setStartingRoom(String startingRoom) {
+        this.startingRoom = startingRoom;
+    }
+
+    public void setEndingRoom(String endingRoom) {
+        this.endingRoom = endingRoom;
+    }
+
+    public void setRooms(Room[] rooms) {
+        this.rooms = rooms;
+    }
 
     //the name of the room you are starting in
     private String startingRoom;

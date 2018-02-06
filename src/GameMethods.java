@@ -3,7 +3,7 @@
  */
 public class GameMethods {
 
-    public void goDirection(String direction) {
+    public void goDirection(Room currentRoom, String direction) {
 
     }
 
