@@ -128,6 +128,7 @@ public class PlayAdventure {
             if (itemObj.equalsIgnoreCase(item)) {
                 myItems.add(itemObj);
                 currentRoomItems = ArrayUtils.removeElement(currentRoomItems, itemObj);
+                currentRoom.setItems(currentRoomItems);
                 PlayAdventure.printCurrentRoom(currentRoom);
                 return;
             }
@@ -142,6 +143,7 @@ public class PlayAdventure {
             if (itemObj.equalsIgnoreCase(item)) {
                 myItems.remove(itemObj);
                 currentRoomItems = ArrayUtils.add(currentRoomItems, itemObj);
+                currentRoom.setItems(currentRoomItems);
                 PlayAdventure.printCurrentRoom(currentRoom);
                 return;
             }
