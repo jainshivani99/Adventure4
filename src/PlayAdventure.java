@@ -3,6 +3,9 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.sun.deploy.util.ArrayUtil;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang.ArrayUtils;
+
 
 import java.util.Scanner;
 import java.util.Arrays;
@@ -48,33 +51,33 @@ public class PlayAdventure {
         PlayAdventure.printCurrentRoom(currentRoom);
         ArrayList<String> myItems = new ArrayList<String>();
 
-        String userInput = myScan.nextLine();
-        String userCommand = userInput.toLowerCase();
-        if (userInput.equalsIgnoreCase("quit") || userInput.equalsIgnoreCase("exit")) {
-            return;
-        }
+        while (true) {
+            String userInput = myScan.nextLine();
+            String userCommand = userInput.toLowerCase();
+            if (userInput.equalsIgnoreCase("quit") || userInput.equalsIgnoreCase("exit")) {
+                System.exit(0);
+            } else if (userInput.equalsIgnoreCase("list")) {
+                PlayAdventure.printItemsList(myItems);
+            }
 
-        else if (userInput.equalsIgnoreCase("list")) {
-            PlayAdventure.printItemsList(myItems);
+            // invalid: goEast valid: go East
+            else if (userCommand.startsWith("go ")) {
+                String direction = userInput.substring(3);
+                currentRoom = PlayAdventure.goDirection(currentRoom, direction);
+            }
+            //Valid: "take apple"
+            //Invalid: "takeApple"
+            else if (userCommand.startsWith("take ")) {
+                String item = userInput.substring(5);
+                PlayAdventure.takeItem(currentRoom, item, myItems);
+            } else if (userCommand.startsWith("drop ")) {
+                String item = userInput.substring(5);
+                PlayAdventure.dropItem(currentRoom, item, myItems);
+            } else {
+                System.out.println("I don't understand" + userInput);
+                PlayAdventure.printCurrentRoom(currentRoom);
+            }
         }
-
-        else if (userCommand.startsWith("go")) {
-            PlayAdventure.goDirection(currentRoom, direction);
-        }
-
-        else if (userCommand.startsWith("take")) {
-            PlayAdventure.takeItem(currentRoom, item, myItems);
-        }
-
-        else if (userCommand.startsWith("drop")) {
-            PlayAdventure.dropItem(currentRoom, item, myItems);
-        }
-
-        else {
-            System.out.println("I don't understand" + userInput);
-            PlayAdventure.printCurrentRoom(currentRoom);
-        }
-
     }
 
     public static void printCurrentRoom(Room currentRoom) {
@@ -83,7 +86,7 @@ public class PlayAdventure {
             System.out.println("Your journey begins here");
         } else if (currentRoom.getName().equals(myGameLayoutJson.getEndingRoom())) {
             System.out.println("You have reached your final destination");
-            return;
+            System.exit(0);
         }
         System.out.println("This room contains" + Arrays.toString(currentRoom.getItems()));
         System.out.println("From here you can go:" + Arrays.toString(currentRoom.getDirections()));
@@ -93,17 +96,29 @@ public class PlayAdventure {
         System.out.println(Arrays.toString(myItems.toArray()));
     }
 
-    public static void goDirection(Room currentRoom, String direction) {
+    public static Room goDirection(Room currentRoom, String direction) {
         Direction[] currentRoomDirections = currentRoom.getDirections();
         for (Direction directionObj : currentRoomDirections) {
             if (directionObj.getDirectionName().equals(direction)) {
-                currentRoom = directionObj.getRoom();
+                //gets the name of the next room the user can go to as a String
+                String nextRoomName = directionObj.getRoom();
+
+                //Objective: update currentRoom
+                //currentRoom should be the room object of the nextRoomName you can go to
+                Room[] allRooms = myGameLayoutJson.getRooms();
+                for (Room roomObj : allRooms) {
+                    if (roomObj.getName().equals(nextRoomName)) {
+                        currentRoom = roomObj;
+                        break;
+                    }
+                }
                 PlayAdventure.printCurrentRoom(currentRoom);
-            } else {
-                System.out.println("I can't go" + direction);
-                PlayAdventure.printCurrentRoom(currentRoom);
+                return currentRoom;
             }
         }
+        System.out.println("I can't go" + direction);
+        PlayAdventure.printCurrentRoom(currentRoom);
+        return currentRoom;
     }
 
     public static void takeItem(Room currentRoom, String item, ArrayList<String> myItems) {
@@ -133,4 +148,5 @@ public class PlayAdventure {
             }
         }
     }
+
 }
