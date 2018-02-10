@@ -1,0 +1,279 @@
+{
+  "startingRoom": "Shivani4MatthewsStreet",
+  "endingRoom": "Shivani4Siebel1314",
+  "rooms": [
+    {
+      "name": "Shivani4MatthewsStreet",
+      "description": "You are on Matthews, outside the Siebel Center",
+      "items": [
+        {
+          "name" : "coin",
+          "damage" : 1.2
+        }
+      ],
+      "directions": [
+        {
+          "directionName": "East",
+          "room": "Shivani4SiebelEntry"
+        }
+      ],
+      "monsters in room": ["Jack", "Cookie Monster"]
+    },
+    {
+      "name": "Shivani4SiebelEntry",
+      "description": "You are in the west entry of Siebel Center.  You can see the elevator, the ACM office, and hallways to the north and east.",
+      "items": [
+        {
+          "name" : "sweatshirt",
+          "damage" : 0.5
+        },
+        {
+          "name" : "key",
+          "damage" : 0.9
+        }
+      ],
+      "directions": [
+        {
+          "directionName": "West",
+          "room": "Shivani4MatthewsStreet"
+        },
+        {
+          "directionName": "Northeast",
+          "room": "Shivani4AcmOffice"
+        },
+        {
+          "directionName": "North",
+          "room": "Shivani4SiebelNorthHallway"
+        },
+        {
+          "directionName": "East",
+          "room": "Shivani4SiebelEastHallway"
+        }
+      ],
+      "monsters in room": ["Jill", "Freddy", "Bob"]
+    },
+    {
+      "name": "Shivani4AcmOffice",
+      "description": "You are in the ACM office.  There are lots of friendly ACM people.",
+      "items": [
+        {
+          "name" : "pizza",
+          "damage" : 0.1
+        },
+        {
+          "name" : "swag",
+          "damage" : 3.4
+        }
+      ],
+      "directions": [
+        {
+          "directionName": "South",
+          "room": "Shivani4SiebelEntry"
+        }
+      ],
+      "monsters in room": ["Mike Wazowski", "Sully"]
+    },
+    {
+      "name": "Shivani4SiebelNorthHallway",
+      "description": "You are in the north hallway.  You can see Shivani4Siebel 1112 and the door toward NCSA.",
+      "directions": [
+        {
+          "directionName": "South",
+          "room": "Shivani4SiebelEntry"
+        },
+        {
+          "directionName": "NorthEast",
+          "room": "Shivani4Siebel1112"
+        }
+      ],
+      "monsters in room": ["Celia", "Flint", "Boo"]
+    },
+    {
+      "name": "Shivani4Siebel1112",
+      "description": "You are in Shivani4Siebel 1112.  There is space for two code reviews in this room.",
+      "items": [
+        {
+          "name" : "sock",
+          "damage" : 2.2
+        },
+        {
+          "name" : "baseball cap",
+          "damage" : 5.6
+        }
+      ],
+      "directions": [
+        {
+          "directionName": "West",
+          "room": "Shivani4SiebelNorthHallway"
+        }
+      ],
+      "monsters in room": ["Randall"]
+    },
+    {
+      "name": "Shivani4SiebelEastHallway",
+      "description": "You are in the east hallway.  You can see Einstein Bros' Bagels and a stairway.",
+      "items": [
+        {
+          "name" : "bagel",
+          "damage" : 8.7
+        },
+        {
+          "name" : "coffee cup",
+          "damage" : 1.95
+        }
+      ],
+      "directions": [
+        {
+          "directionName": "West",
+          "room": "Shivani4SiebelEntry"
+        },
+        {
+          "directionName": "South",
+          "room": "Shivani4Siebel1314"
+        },
+        {
+          "directionName": "Down",
+          "room": "Shivani4SiebelBasement"
+        }
+      ],
+      "monsters in room": ["Hulu", "Squishy"]
+    },
+    {
+      "name": "Shivani4Siebel1314",
+      "description": "You are in Shivani4Siebel 1314.  There are happy CS 126 students doing a code review.",
+      "directions": [
+        {
+          "directionName": "North",
+          "room": "Shivani4SiebelEastHallway"
+        }
+      ],
+      "monsters in room": ["Dean Hardscrabble"]
+    },
+    {
+      "name": "Shivani4SiebelBasement",
+      "description": "You are in the basement of Siebel.  You see tables with students working and door to computer labs.",
+      "items": [
+        {
+          "name" : "pencil",
+          "damage" : 0.66
+        }
+      ],
+      "directions": [
+        {
+          "directionName": "Up",
+          "room": "Shivani4SiebelEastHallway"
+        }
+      ],
+      "monsters in room": ["Don"]
+    }
+  ],
+  "player": {
+    "name": "Player1",
+    "items": [
+      {
+        "name": "sword",
+        "damage": 2.4
+      },
+      {
+        "name": "crystal",
+        "damage": 9.8
+      }
+    ],
+    "attack": 4.93,
+    "defense": 2.7,
+    "health": 8.96,
+    "level": 4
+  },
+  "monsters": [
+    {
+      "name": "Jack",
+      "attack": 2.4,
+      "defense": 4.5,
+      "health": 2.3
+    },
+    {
+      "name": "Cookie Monster",
+      "attack": 0.7,
+      "defense": 3.2,
+      "health": 5.7
+    },
+    {
+      "name": "Jill",
+      "attack": 4.98,
+      "defense": 6.83,
+      "health": 5.99
+    },
+    {
+      "name": "Freddy",
+      "attack": 0.45,
+      "defense": 3.21,
+      "health": 9.88
+    },
+    {
+      "name": "Bob",
+      "attack": 0.74,
+      "defense": 3.99,
+      "health": 4.23
+    },
+    {
+      "name": "Mike Wazowski",
+      "attack": 9.7,
+      "defense": 2.55,
+      "health": 1.3
+    },
+    {
+      "name": "Sully",
+      "attack": 4.33,
+      "defense": 2.0,
+      "health": 8.95
+    },
+    {
+      "name": "Celia",
+      "attack": 3.24,
+      "defense": 3.93,
+      "health": 4.89
+    },
+    {
+      "name": "Flint",
+      "attack": 2.34,
+      "defense": 5.69,
+      "health": 6.3
+    },
+    {
+      "name": "Boo",
+      "attack": 8.04,
+      "defense": 3.59,
+      "health": 2.3
+    },
+    {
+      "name": "Randall",
+      "attack": 8.70,
+      "defense": 2.56,
+      "health": 9.8
+    },
+    {
+      "name": "Hulu",
+      "attack": 0.0,
+      "defense": 2.06,
+      "health": 9.28
+    },
+    {
+      "name": "Squishy",
+      "attack": 8.30,
+      "defense": 2.32,
+      "health": 12.8
+    },
+    {
+      "name": "Dean Hardscrabble",
+      "attack": 6.90,
+      "defense": 2.52,
+      "health": 6.88
+    },
+    {
+      "name": "Don",
+      "attack": 5.47,
+      "defense": 2.36,
+      "health": 9.82
+    }
+  ]
+}
