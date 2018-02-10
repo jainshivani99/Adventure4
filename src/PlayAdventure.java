@@ -19,7 +19,8 @@ public class PlayAdventure {
     public static void setUp(){
         try {
             Gson gson = new Gson();
-            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\jains_000\\IdeaProjects\\adventure-jainshivani99\\Shivani4.json"));
+            BufferedReader br = new BufferedReader(new FileReader
+                    ("C:\\Users\\jains_000\\IdeaProjects\\adventure-jainshivani99\\Shivani4.json"));
             myGameLayoutJson = gson.fromJson(br, Layout.class);
         }
 
@@ -47,14 +48,14 @@ public class PlayAdventure {
         Scanner myScan = new Scanner(System.in);
         System.out.println("");
 
-//        if (args.length > 1) {
-//            String filePath = args[1];
-//            String fileContents = Data.getFileContentsAsString(filePath);
-//            Gson gson = new Gson();
-//            myGameLayoutJson = gson.fromJson(fileContents, Layout.class);
-//        } else {
+        if (args.length > 1) {
+            String filePath = args[1];
+            String fileContents = Data.getFileContentsAsString(filePath);
+            Gson gson = new Gson();
+            myGameLayoutJson = gson.fromJson(fileContents, Layout.class);
+        } else {
             PlayAdventure.setUp();
-//        }
+        }
 
         Room[] myRooms = myGameLayoutJson.getRooms();
         Room currentRoom = null;
@@ -116,8 +117,9 @@ public class PlayAdventure {
         System.out.println();
 
         String[] currentMonstersInRoom = currentRoom.getMonstersInRoom();
-        System.out.println("The monsters in the room are " + Arrays.toString(currentRoom.getMonstersInRoom()));
+        System.out.println("The monsters in the room are " + Arrays.toString(currentMonstersInRoom));
 
+        //if all the monsters in the room have been defeated then
         Direction[] currentRoomDirections = currentRoom.getDirections();
         for (Direction directionObj : currentRoomDirections) {
             System.out.println("From here, you can go: " + directionObj.getDirectionName());

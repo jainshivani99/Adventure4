@@ -17,7 +17,7 @@
           "room": "Shivani4AltSiebelEntry"
         }
       ],
-      "monsters in room": ["Jack", "Cookie Monster"]
+      "monstersInRoom": ["Jack", "Cookie Monster"]
     },
     {
       "name": "Shivani4AltSiebelEntry",
@@ -50,7 +50,7 @@
           "room": "Shivani4AltSiebelEastHallway"
         }
       ],
-      "monsters in room": ["Jill", "Freddy", "Bob"]
+      "monstersInRoom": ["Jill", "Freddy", "Bob"]
     },
     {
       "name": "Shivani4AltAcmOffice",
@@ -71,7 +71,7 @@
           "room": "Shivani4AltSiebelEntry"
         }
       ],
-      "monsters in room": ["Mike Wazowski", "Sully"]
+      "monstersInRoom": ["Mike Wazowski", "Sully"]
     },
     {
       "name": "Shivani4AltSiebelNorthHallway",
@@ -86,7 +86,7 @@
           "room": "Shivani4AltSiebel1112"
         }
       ],
-      "monsters in room": ["Celia", "Flint", "Boo"]
+      "monstersInRoom": ["Celia", "Flint", "Boo"]
     },
     {
       "name": "Shivani4AltSiebel1112",
@@ -107,7 +107,7 @@
           "room": "Shivani4AltSiebelNorthHallway"
         }
       ],
-      "monsters in room": ["Randall"]
+      "monstersInRoom": ["Randall"]
     },
     {
       "name": "Shivani4AltSiebelEastHallway",
@@ -136,7 +136,7 @@
           "room": "Shivani4AltSiebelBasement"
         }
       ],
-      "monsters in room": ["Hulu", "Squishy"]
+      "monstersInRoom": ["Hulu", "Squishy"]
     },
     {
       "name": "Shivani4AltSiebel1314",
@@ -147,7 +147,7 @@
           "room": "Shivani4AltSiebelEastHallway"
         }
       ],
-      "monsters in room": ["Dean Hardscrabble"]
+      "monstersInRoom": ["Dean Hardscrabble"]
     },
     {
       "name": "Shivani4AltSiebelBasement",
@@ -164,7 +164,7 @@
           "room": "Shivani4AltSiebelEastHallway"
         }
       ],
-      "monsters in room": ["Don"]
+      "monstersInRoom": ["Don"]
     }
   ],
   "player": {
