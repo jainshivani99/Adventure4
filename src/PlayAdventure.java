@@ -37,7 +37,14 @@ public class PlayAdventure {
         Scanner myScan = new Scanner(System.in);
         System.out.println("");
 
-        PlayAdventure.setUp();
+        if (args.length > 1) {
+            String filePath = args[1];
+            String fileContents = Data.getFileContentsAsString(filePath);
+            Gson gson = new Gson();
+            myGameLayoutJson = gson.fromJson(fileContents, Layout.class);
+        } else {
+            PlayAdventure.setUp();
+        }
 
         Room[] myRooms = myGameLayoutJson.getRooms();
         Room currentRoom = null;
@@ -151,5 +158,4 @@ public class PlayAdventure {
         System.out.println("I can't drop " + item);
         PlayAdventure.printCurrentRoom(currentRoom);
     }
-
 }

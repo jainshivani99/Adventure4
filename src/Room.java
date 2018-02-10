@@ -11,10 +11,13 @@ public class Room {
     private String description;
 
     //an array of items in the room you are currently in
-    private String[] items;
+    private Item[] items;
 
     //an array of directions that you can go from the room you are currently in
     private Direction[] directions;
+
+    //names of monster to look up in the monster array
+    private String[] monstersInRoom;
 
     //Empty Constructor
     public Room() {
@@ -43,7 +46,7 @@ public class Room {
      * Gets the items array of the room you are currently in
      * @return items - an array of items in the room you are currently in
      */
-    public String[] getItems() {
+    public Item[] getItems() {
         return items;
     }
 
@@ -55,6 +58,9 @@ public class Room {
         return directions;
     }
 
+    public String[] getMonstersInRoom() {
+        return monstersInRoom;
+    }
     //Setter methods for each attribute of the room object
 
     /**
@@ -77,7 +83,7 @@ public class Room {
      * Sets the array of items in the room to the given parameter
      * @param items - an array of items to set it to
      */
-    public void setItems(String[] items) {
+    public void setItems(Item[] items) {
         this.items = items;
     }
 
@@ -87,6 +93,10 @@ public class Room {
      */
     public void setDirections(Direction[] directions) {
         this.directions = directions;
+    }
+
+    public void setMonstersInRoom(String[] monstersInRoom) {
+        this.monstersInRoom = monstersInRoom;
     }
 
 

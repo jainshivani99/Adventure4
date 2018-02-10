@@ -12,6 +12,12 @@ public class Layout {
     //an array of rooms that are available for you to go to
     private Room[] rooms;
 
+    //the name of the player in the game
+    private Player player;
+
+    //an array of monsters that are playing the game
+    private Monster[] monsters;
+
     //Empty Constructor
     public Layout() {
 
@@ -43,8 +49,15 @@ public class Layout {
         return rooms;
     }
 
+    public Player getPlayer() {
+        return player;
+    }
+
+    public Monster[] getMonsters() {
+        return monsters;
+    }
     //Setter methods for each attribute of the direction object
-    
+
     /**
      * Sets the room that you start in
      * @param startingRoom - the name of the room you start in
@@ -68,5 +81,15 @@ public class Layout {
     public void setRooms(Room[] rooms) {
         this.rooms = rooms;
     }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+
+    public void setMonsters(Monster[] monsters) {
+        this.monsters = monsters;
+    }
+
 
 }
