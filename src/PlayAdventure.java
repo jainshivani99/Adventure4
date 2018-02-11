@@ -66,6 +66,7 @@ public class PlayAdventure {
         }
         PlayAdventure.printCurrentRoom(currentRoom);
         ArrayList<Item> myItems = new ArrayList<Item>();
+        Player p1 = new Player();
 
         while (true) {
             String userInput = myScan.nextLine();
@@ -93,6 +94,14 @@ public class PlayAdventure {
                 Item thisItem = new Item();
                 thisItem.setName(itemName);
                 PlayAdventure.dropItem(currentRoom, thisItem, myItems);
+            } else if (userCommand.startsWith("duel ")) {
+                String desiredMonster = userInput.substring(5);
+                PlayAdventure.validateMonster(currentRoom, desiredMonster);
+            } else if (userCommand.startsWith("attack ")) {
+                String myMonsterName = userInput.substring(7);
+                Monster myMonster = new Monster();
+                myMonster.setName(myMonsterName);
+                PlayAdventure.attack(p1, myMonster);
             } else {
                 System.out.println("I don't understand " + userInput);
                 PlayAdventure.printCurrentRoom(currentRoom);
@@ -110,16 +119,19 @@ public class PlayAdventure {
             System.exit(0);
         }
         Item[] currentRoomItems = currentRoom.getItems();
-        System.out.println("This room contains ");
+        System.out.println("This room contains: ");
         for (int index = 0; index < currentRoomItems.length; index++) {
-            System.out.print(currentRoomItems[index].getName() + ", ");
+            System.out.print(currentRoomItems[index].getName());
+            if (index < currentRoomItems.length - 1) {
+                System.out.print(", ");
+            }
         }
         System.out.println();
 
         String[] currentMonstersInRoom = currentRoom.getMonstersInRoom();
         System.out.println("The monsters in the room are " + Arrays.toString(currentMonstersInRoom));
 
-        //if all the monsters in the room have been defeated then
+        //if all the monsters in the room have been defeated then print directions
         Direction[] currentRoomDirections = currentRoom.getDirections();
         for (Direction directionObj : currentRoomDirections) {
             System.out.println("From here, you can go: " + directionObj.getDirectionName());
@@ -183,5 +195,27 @@ public class PlayAdventure {
         }
         System.out.println("I can't drop " + thisItem);
         PlayAdventure.printCurrentRoom(currentRoom);
+    }
+
+    public static void validateMonster(Room currentRoom, String desiredMonster) {
+        String[] currentMonsters = currentRoom.getMonstersInRoom();
+        for (String monsterName : currentMonsters) {
+            if (desiredMonster.equalsIgnoreCase(monsterName)) {
+                System.out.println("You are now in a duel with " + monsterName);
+                return;
+            }
+        }
+        System.out.println("I can't duel with " + desiredMonster);
+    }
+
+    public static void attack(Player p1, Monster currentMonster) {
+        double monsterCurrentHealth = currentMonster.getHealth();
+        double damage = p1.getAttack() - currentMonster.getDefense();
+        currentMonster.setHealth(monsterCurrentHealth - damage);
+        System.out.println("Value of Monster's health " + currentMonster.getHealth());
+        if (currentMonster.getHealth() <= 0) {
+            System.out.println(currentMonster.getName() + " is dead");
+        }
+        System.out.println("Value of Player's health " + p1.getHealth());
     }
 }
