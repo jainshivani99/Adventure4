@@ -16,6 +16,9 @@ public class PlayAdventure {
 
     private static Layout myGameLayoutJson;
 
+    //boolean is show if the player is in duel mode
+    private static boolean duel = false;
+
     public static void setUp(){
         try {
             Gson gson = new Gson();
@@ -48,8 +51,8 @@ public class PlayAdventure {
         Scanner myScan = new Scanner(System.in);
         System.out.println("");
 
-        if (args.length > 1) {
-            String filePath = args[1];
+        if (args.length > 0) {
+            String filePath = args[0];
             String fileContents = Data.getFileContentsAsString(filePath);
             Gson gson = new Gson();
             myGameLayoutJson = gson.fromJson(fileContents, Layout.class);
@@ -65,46 +68,77 @@ public class PlayAdventure {
             }
         }
         PlayAdventure.printCurrentRoom(currentRoom);
-        ArrayList<Item> myItems = new ArrayList<Item>();
-        Player p1 = new Player();
+        Player p1 = myGameLayoutJson.getPlayer();
+        Item[] myItems = p1.getItems();
 
+        Monster currentMonster = null;
         while (true) {
             String userInput = myScan.nextLine();
             String userCommand = userInput.toLowerCase();
-            if (userInput.equalsIgnoreCase("quit") || userInput.equalsIgnoreCase("exit")) {
-                System.exit(0);
-            } else if (userInput.equalsIgnoreCase("list")) {
-                PlayAdventure.printItemsList(myItems);
-            }
 
-            // invalid: goEast valid: go East
-            else if (userCommand.startsWith("go ")) {
-                String direction = userInput.substring(3);
-                currentRoom = PlayAdventure.goDirection(currentRoom, direction);
-            }
-            //Valid: "take apple"
-            //Invalid: "takeApple"
-            else if (userCommand.startsWith("take ")) {
-                String itemName = userInput.substring(5);
-                Item thisItem = new Item();
-                thisItem.setName(itemName);
-                PlayAdventure.takeItem(currentRoom, thisItem, myItems);
-            } else if (userCommand.startsWith("drop ")) {
-                String itemName = userInput.substring(5);
-                Item thisItem = new Item();
-                thisItem.setName(itemName);
-                PlayAdventure.dropItem(currentRoom, thisItem, myItems);
-            } else if (userCommand.startsWith("duel ")) {
-                String desiredMonster = userInput.substring(5);
-                PlayAdventure.validateMonster(currentRoom, desiredMonster);
-            } else if (userCommand.startsWith("attack ")) {
-                String myMonsterName = userInput.substring(7);
-                Monster myMonster = new Monster();
-                myMonster.setName(myMonsterName);
-                PlayAdventure.attack(p1, myMonster);
+            if (duel == false) {
+                if (userInput.equalsIgnoreCase("quit") || userInput.equalsIgnoreCase("exit")) {
+                    System.exit(0);
+                } else if (userInput.equalsIgnoreCase("list")) {
+                    PlayAdventure.printItemsList(myItems);
+                }
+
+                // invalid: goEast valid: go East
+                else if (userCommand.startsWith("go ")) {
+                    String direction = userInput.substring(3);
+                    currentRoom = PlayAdventure.goDirection(currentRoom, direction);
+                }
+                //Valid: "take apple"
+                //Invalid: "takeApple"
+                else if (userCommand.startsWith("take ")) {
+                    String thisItem = userInput.substring(5);
+                    PlayAdventure.takeItem(currentRoom, thisItem, myItems, p1);
+                } else if (userCommand.startsWith("drop ")) {
+                    String thisItem = userInput.substring(5);
+                    PlayAdventure.dropItem(currentRoom, thisItem, myItems, p1);
+                } else if (userCommand.startsWith("duel ")) {
+                    String desiredMonster = userInput.substring(5);
+                    duel = PlayAdventure.validateMonster(currentRoom, desiredMonster);
+                    if (duel) {
+                        Monster[] myMonsters = myGameLayoutJson.getMonsters();
+                        for (Monster monsterObj : myMonsters) {
+                            if (monsterObj.getName().equalsIgnoreCase(desiredMonster)) {
+                                currentMonster = monsterObj;
+                            }
+                        }
+                    }
+                } else if (userCommand.equalsIgnoreCase("playerinfo")) {
+                    PlayAdventure.printPlayerInfo(p1);
+                } else {
+                    System.out.println("I don't understand " + userInput);
+                    PlayAdventure.printCurrentRoom(currentRoom);
+                }
             } else {
-                System.out.println("I don't understand " + userInput);
-                PlayAdventure.printCurrentRoom(currentRoom);
+                if (userCommand.equalsIgnoreCase("attack")) {
+                   PlayAdventure.attack(p1, currentMonster, currentRoom);
+                } else if (userCommand.startsWith("attack with ")) {
+                    String desiredItem = userInput.substring(12);
+
+                } else if (userCommand.equalsIgnoreCase("disengage")) {
+                    duel = false;
+                    PlayAdventure.printCurrentRoom(currentRoom);
+
+                } else if (userCommand.equalsIgnoreCase("status")) {
+                    System.out.println(p1.getName() + ": " + p1.getHealth());
+                    System.out.println(currentMonster.getName() + ": " + currentMonster.getHealth());
+
+                } else if (userCommand.equalsIgnoreCase("list")) {
+                    PlayAdventure.printItemsList(myItems);
+                } else if (userCommand.equalsIgnoreCase("playerinfo")) {
+                    PlayAdventure.printPlayerInfo(p1);
+
+                } else if (userInput.equalsIgnoreCase("quit")
+                        || userInput.equalsIgnoreCase("exit")) {
+                    System.exit(0);
+                } else {
+                    System.out.println("I don't understand " + userInput);
+                    PlayAdventure.printCurrentRoom(currentRoom);
+                }
             }
         }
     }
@@ -132,14 +166,18 @@ public class PlayAdventure {
         System.out.println("The monsters in the room are " + Arrays.toString(currentMonstersInRoom));
 
         //if all the monsters in the room have been defeated then print directions
-        Direction[] currentRoomDirections = currentRoom.getDirections();
-        for (Direction directionObj : currentRoomDirections) {
-            System.out.println("From here, you can go: " + directionObj.getDirectionName());
+        if (currentMonstersInRoom.length == 0) {
+            Direction[] currentRoomDirections = currentRoom.getDirections();
+            for (Direction directionObj : currentRoomDirections) {
+                System.out.println("From here, you can go: " + directionObj.getDirectionName());
+            }
         }
     }
 
-    public static void printItemsList(ArrayList<Item> myItems) {
-        System.out.println(Arrays.toString(myItems.toArray()));
+    public static void printItemsList(Item[] myItems) {
+        for (Item itemObj : myItems) {
+            System.out.println(itemObj.getName() + ",");
+        }
     }
 
     public static Room goDirection(Room currentRoom, String direction) {
@@ -167,11 +205,12 @@ public class PlayAdventure {
         return currentRoom;
     }
 
-    public static void takeItem(Room currentRoom, Item thisItem, ArrayList<Item> myItems) {
+    public static void takeItem(Room currentRoom, String thisItem, Item[] myItems, Player p1) {
         Item[] currentRoomItems = currentRoom.getItems();
         for (Item itemObj : currentRoomItems) {
-            if (itemObj.getName().equalsIgnoreCase(thisItem.getName())) {
-                myItems.add(itemObj);
+            if (itemObj.getName().equalsIgnoreCase(thisItem)) {
+                myItems = ArrayUtils.add(myItems, itemObj);
+                p1.setItems(myItems);
                 currentRoomItems = ArrayUtils.removeElement(currentRoomItems, itemObj);
                 currentRoom.setItems(currentRoomItems);
                 PlayAdventure.printCurrentRoom(currentRoom);
@@ -182,11 +221,12 @@ public class PlayAdventure {
         PlayAdventure.printCurrentRoom(currentRoom);
     }
 
-    public static void dropItem(Room currentRoom, Item thisItem, ArrayList<Item> myItems) {
+    public static void dropItem(Room currentRoom, String thisItem, Item[] myItems, Player p1) {
         Item[] currentRoomItems = currentRoom.getItems();
         for (Item itemObj : myItems) {
-            if (itemObj.getName().equalsIgnoreCase(thisItem.getName())) {
-                myItems.remove(itemObj);
+            if (itemObj.getName().equalsIgnoreCase(thisItem)) {
+                myItems = ArrayUtils.removeElement(myItems, itemObj);
+                p1.setItems(myItems);
                 currentRoomItems = ArrayUtils.add(currentRoomItems, itemObj);
                 currentRoom.setItems(currentRoomItems);
                 PlayAdventure.printCurrentRoom(currentRoom);
@@ -197,25 +237,48 @@ public class PlayAdventure {
         PlayAdventure.printCurrentRoom(currentRoom);
     }
 
-    public static void validateMonster(Room currentRoom, String desiredMonster) {
+    public static boolean validateMonster(Room currentRoom, String desiredMonster) {
         String[] currentMonsters = currentRoom.getMonstersInRoom();
         for (String monsterName : currentMonsters) {
             if (desiredMonster.equalsIgnoreCase(monsterName)) {
                 System.out.println("You are now in a duel with " + monsterName);
-                return;
+                return true;
             }
         }
         System.out.println("I can't duel with " + desiredMonster);
+        return false;
     }
 
-    public static void attack(Player p1, Monster currentMonster) {
+    public static void attack(Player p1, Monster currentMonster, Room currentRoom) {
+        System.out.println("Value of player's health pre-attack: " + p1.getHealth());
         double monsterCurrentHealth = currentMonster.getHealth();
-        double damage = p1.getAttack() - currentMonster.getDefense();
-        currentMonster.setHealth(monsterCurrentHealth - damage);
-        System.out.println("Value of Monster's health " + currentMonster.getHealth());
+        System.out.println("Value of monster health pre-attack: " + monsterCurrentHealth);
+        double playerDamage = p1.getAttack() - currentMonster.getDefense();
+        currentMonster.setHealth(monsterCurrentHealth - playerDamage);
         if (currentMonster.getHealth() <= 0) {
             System.out.println(currentMonster.getName() + " is dead");
+            duel = false;
+            String[] currentRoomMonsters = currentRoom.getMonstersInRoom();
+            currentRoomMonsters = ArrayUtils.removeElement(currentRoomMonsters, currentMonster.getName());
+            currentRoom.setMonstersInRoom(currentRoomMonsters);
+        } else {
+            double monsterDamage = currentMonster.getAttack() - p1.getDefense();
+            p1.setHealth(p1.getHealth() - monsterDamage);
+            if (p1.getHealth() <= 0) {
+                System.out.println("Value of player's health post-attack: " + p1.getHealth());
+                System.out.println(p1.getName() + " is dead");
+                System.exit(0);
+            }
         }
-        System.out.println("Value of Player's health " + p1.getHealth());
+        System.out.println("Value of player's health post-attack: " + p1.getHealth());
+        System.out.println("Value of monster's health post-attack: " + currentMonster.getHealth());
+    }
+
+    public static void printPlayerInfo(Player p1) {
+        System.out.println("Player name: " + p1.getName());
+        System.out.println("Player level: " + p1.getLevel());
+        System.out.println("Player attack: " + p1.getAttack());
+        System.out.println("Player defense: " + p1.getDefense());
+        System.out.println("Player health: " + p1.getHealth());
     }
 }
