@@ -19,6 +19,8 @@ public class PlayAdventure {
     //boolean is show if the player is in duel mode
     private static boolean duel = false;
 
+    private static boolean conditionAttack = false;
+
     public static void setUp(){
         try {
             Gson gson = new Gson();
@@ -115,6 +117,7 @@ public class PlayAdventure {
                 }
             } else {
                 if (userCommand.equalsIgnoreCase("attack")) {
+                    conditionAttack = true;
                    PlayAdventure.attack(p1, currentMonster, currentRoom);
                 } else if (userCommand.startsWith("attack with ")) {
                     String desiredItem = userInput.substring(12);
@@ -261,6 +264,7 @@ public class PlayAdventure {
             String[] currentRoomMonsters = currentRoom.getMonstersInRoom();
             currentRoomMonsters = ArrayUtils.removeElement(currentRoomMonsters, currentMonster.getName());
             currentRoom.setMonstersInRoom(currentRoomMonsters);
+            PlayAdventure.printCurrentRoom(currentRoom);
         } else {
             double monsterDamage = currentMonster.getAttack() - p1.getDefense();
             p1.setHealth(p1.getHealth() - monsterDamage);
